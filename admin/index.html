@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYINS Admin — Security Dashboard</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+  .wrap{max-width:1200px;margin:0 auto;padding:24px}
+  h1{font-size:22px;margin-bottom:4px;color:#fff}
+  .sub{color:#94a3b8;font-size:13px;margin-bottom:22px}
+  .card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:18px;margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+  .stat{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px}
+  .stat .lbl{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+  .stat .val{font-size:26px;font-weight:800;margin-top:6px;color:#fff}
+  .stat .val.warn{color:#f59e0b}
+  .stat .val.bad{color:#ef4444}
+  .stat .val.ok{color:#22c55e}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  input,select,button{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:9px 13px;border-radius:8px;font-size:13px;font-family:inherit}
+  input:focus,select:focus{outline:none;border-color:#3b82f6}
+  button{background:#3b82f6;border:none;cursor:pointer;font-weight:600;color:#fff}
+  button:hover{background:#2563eb}
+  button.sec{background:#334155}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{text-align:left;padding:9px;border-bottom:1px solid #334155;color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  td{padding:9px;border-bottom:1px solid #1e293b;vertical-align:top}
+  tr:hover td{background:#1e293b}
+  .tag{padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:700;white-space:nowrap}
+  .tag.INFO{background:#164e63;color:#67e8f9}
+  .tag.WARNING{background:#713f12;color:#fcd34d}
+  .tag.CRITICAL{background:#7f1d1d;color:#fca5a5}
+  .tag.OK{background:#14532d;color:#86efac}
+  .msg{color:#94a3b8;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .login{max-width:380px;margin:14vh auto;text-align:center}
+  .login h1{margin-bottom:8px}
+  .login input{width:100%;margin:14px 0 10px;padding:12px}
+  .login button{width:100%;padding:12px}
+  .hide{display:none!important}
+  .muted{color:#64748b;font-size:12px}
+  @media(max-width:640px){.msg{max-width:120px}table{font-size:11.5px}th,td{padding:6px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="wrap">
+  <div class="login">
+    <h1>🔒 BYINS Admin</h1>
+    <p class="muted">Security Dashboard</p>
+    <input id="key" type="password" placeholder="Admin API Key" autocomplete="off">
+    <button onclick="login()">Masuk</button>
+    <p class="muted" id="loginErr" style="margin-top:10px;color:#ef4444"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="wrap hide">
+  <h1>🔒 BYINS Admin — Security Dashboard</h1>
+  <p class="sub">API: <code id="apiUrl"></code> · <span id="lastUpdate"></span>
+    <button class="sec" style="float:right;padding:6px 12px;font-size:12px" onclick="logout()">Log Keluar</button>
+  </p>
+
+  <div class="card">
+    <div class="grid">
+      <div class="stat"><div class="lbl">Events (24j)</div><div class="val" id="sEvents">–</div></div>
+      <div class="stat"><div class="lbl">Auth Gagal</div><div class="val" id="sAuth">–</div></div>
+      <div class="stat"><div class="lbl">Rate Limited</div><div class="val" id="sRate">–</div></div>
+      <div class="stat"><div class="lbl">IP Disekat</div><div class="val" id="sBlock">–</div></div>
+      <div class="stat"><div class="lbl">Order Berjaya</div><div class="val" id="sOrders">–</div></div>
+      <div class="stat"><div class="lbl">Nilai (24j)</div><div class="val" id="sValue">–</div></div>
+      <div class="stat"><div class="lbl">Kesihatan</div><div class="val" id="sHealth">–</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:12px;font-size:15px">📜 Audit Log</h3>
+    <div class="row">
+      <select id="fLevel" onchange="loadAudit()">
+        <option value="">Semua Level</option>
+        <option value="INFO">INFO</option>
+        <option value="WARNING">WARNING</option>
+        <option value="CRITICAL">CRITICAL</option>
+      </select>
+      <select id="fEvent" onchange="loadAudit()">
+        <option value="">Semua Event</option>
+        <option value="AUTH_FAILED">AUTH_FAILED</option>
+        <option value="RATE_LIMIT_EXCEEDED">RATE_LIMIT_EXCEEDED</option>
+        <option value="IP_BLOCKED">IP_BLOCKED</option>
+        <option value="ORDER_SUCCESS">ORDER_SUCCESS</option>
+        <option value="INVALID_INPUT">INVALID_INPUT</option>
+      </select>
+      <input id="fIP" placeholder="Filter IP…" onkeyup="if(event.key==='Enter')loadAudit()">
+      <button onclick="loadAudit()">🔍 Cari</button>
+      <button class="sec" onclick="loadAudit()">↻ Refresh</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Masa</th><th>Level</th><th>Event</th><th>IP</th><th>Pesan</th></tr></thead>
+        <tbody id="logBody"><tr><td colspan="5" class="muted">Memuatkan…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="muted" id="logInfo" style="margin-top:10px"></p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:12px;font-size:15px">⚠️ Alert Terkini</h3>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Masa</th><th>Event</th><th>IP</th><th>Pesan</th></tr></thead>
+        <tbody id="alertBody"><tr><td colspan="4" class="muted">Memuatkan…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:12px;font-size:15px">🌐 IP Paling Aktif (24j)</h3>
+    <div id="topIPs" class="muted">Memuatkan…</div>
+  </div>
+</div>
+
+<script>
+const API = 'https://api.byinsstore.my';
+let KEY = sessionStorage.getItem('byins_admin_key') || '';
+
+document.getElementById('apiUrl').textContent = API;
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function fmtTime(ts){ if(!ts) return '–'; try{ return new Date(ts).toLocaleString('ms-MY',{hour12:false}); }catch{ return ts; } }
+
+async function api(path){
+  const r = await fetch(API + path, { headers: { 'X-Admin-Key': KEY } });
+  if (r.status === 401) { logout(); throw new Error('Sesi tamat'); }
+  return r.json();
+}
+
+function login(){
+  const k = document.getElementById('key').value.trim();
+  if(!k){ document.getElementById('loginErr').textContent = 'Sila masukkan key'; return; }
+  KEY = k; sessionStorage.setItem('byins_admin_key', k);
+  showDash();
+}
+
+function logout(){
+  sessionStorage.removeItem('byins_admin_key'); KEY = '';
+  document.getElementById('dash').classList.add('hide');
+  document.getElementById('login').classList.remove('hide');
+}
+
+function showDash(){
+  document.getElementById('login').classList.add('hide');
+  document.getElementById('dash').classList.remove('hide');
+  loadAll();
+}
+
+async function loadAll(){ await Promise.all([loadSummary(), loadAudit(), loadAlerts()]); }
+
+async function loadSummary(){
+  try{
+    const d = await api('/admin/summary');
+    if(!d.success) return;
+    const s = d.last_24h;
+    setVal('sEvents', s.total_events);
+    setVal('sAuth', s.failed_auth, s.failed_auth>20);
+    setVal('sRate', s.rate_limited, s.rate_limited>50);
+    setVal('sBlock', s.ip_blocked, s.ip_blocked>0);
+    setVal('sOrders', s.orders_success);
+    setVal('sValue', 'RM ' + (s.order_value_rm||0).toFixed(2));
+    const h = document.getElementById('sHealth');
+    h.textContent = d.health;
+    h.className = 'val ' + (d.health==='OK'?'ok':'warn');
+    document.getElementById('lastUpdate').textContent = 'Kemas kini: ' + new Date().toLocaleTimeString('ms-MY');
+    // stats for top IPs
+    const st = await api('/admin/stats');
+    const ips = st.top_ips||[];
+    document.getElementById('topIPs').innerHTML = ips.length
+      ? ips.map(i=>`<div style="padding:5px 0;border-bottom:1px solid #1e293b"><code>${esc(i.ip)}</code> — <b>${i.count}</b> request</div>`).join('')
+      : 'Tiada aktiviti';
+  }catch(e){ console.error(e); }
+}
+
+function setVal(id, v, warn){
+  const el = document.getElementById(id);
+  el.textContent = v;
+  el.className = 'val' + (warn ? ' bad' : '');
+}
+
+async function loadAudit(){
+  const level = document.getElementById('fLevel').value;
+  const event = document.getElementById('fEvent').value;
+  const ip = document.getElementById('fIP').value.trim();
+  let qs = '?limit=100';
+  if(level) qs += '&level=' + encodeURIComponent(level);
+  if(event) qs += '&event=' + encodeURIComponent(event);
+  if(ip) qs += '&ip=' + encodeURIComponent(ip);
+  try{
+    const d = await api('/admin/audit' + qs);
+    const tb = document.getElementById('logBody');
+    if(!d.entries || !d.entries.length){
+      tb.innerHTML = '<tr><td colspan="5" class="muted">Tiada rekod</td></tr>';
+      document.getElementById('logInfo').textContent = '';
+      return;
+    }
+    tb.innerHTML = d.entries.map(e=>`<tr>
+      <td class="muted" style="white-space:nowrap">${esc(fmtTime(e.timestamp))}</td>
+      <td><span class="tag ${esc(e.level)}">${esc(e.level)}</span></td>
+      <td><b>${esc(e.event)}</b></td>
+      <td><code style="color:#67e8f9">${esc(e.ip)}</code></td>
+      <td class="msg" title="${esc(e.message)}">${esc(e.message)||'–'}</td>
+    </tr>`).join('');
+    document.getElementById('logInfo').textContent = `Menunjuk ${d.entries.length} dari ${d.total} rekod`;
+  }catch(e){ console.error(e); }
+}
+
+async function loadAlerts(){
+  try{
+    const d = await api('/admin/alerts?limit=50');
+    const tb = document.getElementById('alertBody');
+    if(!d.alerts || !d.alerts.length){
+      tb.innerHTML = '<tr><td colspan="4" class="muted">Tiada alert — semua OK ✅</td></tr>';
+      return;
+    }
+    tb.innerHTML = d.alerts.map(a=>`<tr>
+      <td class="muted" style="white-space:nowrap">${esc(fmtTime(a.timestamp))}</td>
+      <td><b>${esc(a.event||a.event)}</b></td>
+      <td><code style="color:#fca5a5">${esc(a.ip||'–')}</code></td>
+      <td class="msg" title="${esc(a.message)}">${esc(a.message)||'–'}</td>
+    </tr>`).join('');
+  }catch(e){ console.error(e); }
+}
+
+// Auto-refresh setiap 30 saat
+setInterval(()=>{ if(KEY) loadAll(); }, 30000);
+
+// Init
+if(KEY && KEY.length > 10) showDash();
+</script>
+</body>
+</html>
