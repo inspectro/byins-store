@@ -531,6 +531,7 @@ let LANG = localStorage.getItem('byins_lang') || 'ms';
 function toggleLang() {
   LANG = (LANG === 'ms') ? 'en' : 'ms';
   localStorage.setItem('byins_lang', LANG);
+  render();          // re-render supaya deskripsi tukar bahasa
   applyLang();
 }
 
@@ -595,6 +596,7 @@ async function loadProducts() {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
     if (!data || !data.categories) throw new Error('Data tidak sah');
+    window.__LAST_DATA__ = data;
     render(data);
   } catch (e) {
     console.error('Load error:', e);
@@ -612,6 +614,8 @@ function esc(s) {
 }
 
 function render(data) {
+  data = data || window.__LAST_DATA__;
+  if (!data) return;
   // Stats
   const s = data.stats || {};
   document.getElementById('s-prod').textContent = (s.inStock != null ? s.inStock : s.totalProducts) ?? '—';
@@ -663,7 +667,9 @@ function render(data) {
         h += '<div class="stock-badge stock-in">' + (LANG === 'en' ? '✓ In stock (' + p.stock + ')' : '✓ Ada stok (' + p.stock + ')') + '</div>';
       }
 
-      if (p.description) h += '<div class="card-desc">' + esc(p.description) + '</div>';
+      // Deskripsi ikut bahasa (EN guna translation, fallback BM)
+      const desc = (LANG === 'en' && p.description_en) ? p.description_en : p.description;
+      if (desc) h += '<div class="card-desc">' + esc(desc) + '</div>';
       h += '<div class="card-foot"><div class="price">' + esc(p.priceDisplay) + '<small>' + (LANG === 'en' ? 'one-time' : 'sekali bayar') + '</small></div>';
       if (oos) {
         h += '<span class="btn btn-disabled btn-sm">' + (LANG === 'en' ? 'Sold out' : 'Habis') + '</span>';
@@ -693,6 +699,28 @@ function render(data) {
   document.getElementById('catalog').innerHTML = html;
   applyLang();   // terjemah label produk
 }
+
+// === Auto-poll: semak perubahan setiap 30s (tanpa refresh) ===
+let LAST_FP = null;
+async function pollUpdates() {
+  try {
+    const r = await fetch(API_BASE + '/api/products', { cache: 'no-store' });
+    if (!r.ok) return;
+    const d = await r.json();
+    // Fingerprint ringkas: produk + stok + harga
+    const fp = (d.products || []).map(p => p.id + p.stock + p.price + (p.description||'').length).join('|');
+    if (LAST_FP !== null && fp !== LAST_FP) {
+      render(d);              // ada perubahan → re-render
+      applyLang();
+    }
+    LAST_FP = fp;
+    // Simpan untuk loadProducts guna juga
+    window.__LAST_DATA__ = d;
+  } catch (e) { /* senyap */ }
+}
+setInterval(pollUpdates, 30000);
+// Poll pertama selepas 5s (untuk set baseline)
+setTimeout(pollUpdates, 5000);
 
 loadSiteConfig().then(() => loadProducts()).then(() => applyLang());
 </script>
