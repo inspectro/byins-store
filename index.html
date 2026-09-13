@@ -3,315 +3,395 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BYINS Store — Premium Digital Accounts Malaysia</title>
-<meta name="description" content="Netflix, YouTube Premium, Canva, Spotify & banyak lagi. Auto delivery, 100% warranty, harga terbaik.">
+<title>BYINS Store — Akaun Premium & AI Tools</title>
+<meta name="description" content="Akaun premium harga mampu milik — Netflix, YouTube Premium, Gemini AI, CapCut Pro dan banyak lagi. Akses serta-merta, bayaran sekali.">
+<meta property="og:title" content="BYINS Store — Akaun Premium & AI Tools">
+<meta property="og:description" content="Netflix, YouTube Premium, Gemini AI, CapCut Pro — harga murah, akses serta-merta.">
+<meta property="og:type" content="website">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --brand:#2563eb; --brand-dark:#1d4ed8; --ink:#0f172a; --muted:#64748b;
-    --line:#e2e8f0; --bg:#f8fafc; --ok:#16a34a; --warn:#f59e0b;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#0a0a0b; --bg2:#111113; --card:#17171a; --border:#26262b;
+    --text:#f4f4f5; --muted:#a1a1aa; --accent:#10a37f; --accent2:#0d8a6a;
+    --radius:14px;
   }
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-  a{text-decoration:none;color:inherit}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 24px; }
 
-  /* Header */
-  header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;backdrop-filter:blur(8px)}
-  .head{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:16px}
-  .logo{font-weight:800;font-size:20px;letter-spacing:-.3px;color:var(--brand);white-space:nowrap}
-  .logo span{color:var(--ink)}
-  .head nav{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:500;color:#475569}
-  .head nav a:hover{color:var(--brand)}
-  .cta-tg{background:var(--brand);color:#fff!important;padding:9px 16px;border-radius:9px;font-weight:600;font-size:13px}
-  .cta-tg:hover{background:var(--brand-dark)}
-  .cart-btn{position:relative;background:#f1f5f9;border:none;padding:9px 14px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
-  .cart-btn:hover{background:#e2e8f0}
-  .badge{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;font-size:11px;min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;padding:0 4px}
+  /* === NAV === */
+  nav {
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,10,11,.85); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-in { display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .logo { font-weight:700; font-size:18px; letter-spacing:-.02em; display:flex; align-items:center; gap:8px; }
+  .logo span { color:var(--accent); }
+  .nav-links { display:flex; gap:28px; align-items:center; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:14.5px; transition:color .15s; }
+  .nav-links a:hover { color:var(--text); }
+  .btn {
+    display:inline-flex; align-items:center; gap:8px; justify-content:center;
+    padding:12px 22px; border-radius:10px; font-weight:600; font-size:14.5px;
+    text-decoration:none; border:none; cursor:pointer; transition:all .15s;
+  }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { background:var(--accent2); transform:translateY(-1px); }
+  .btn-ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .btn-ghost:hover { background:var(--card); }
+  .btn-sm { padding:9px 16px; font-size:13.5px; }
 
-  /* Hero */
-  .hero{background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;padding:64px 0;text-align:center}
-  .hero h1{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-.8px;margin-bottom:14px}
-  .hero p{font-size:clamp(15px,2vw,17px);opacity:.94;max-width:660px;margin:0 auto 26px}
-  .feats{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-size:14px;font-weight:500}
-  .feats span{opacity:.96}
+  /* === HERO === */
+  header { padding:88px 0 72px; text-align:center; position:relative; overflow:hidden; }
+  header::before {
+    content:""; position:absolute; top:-320px; left:50%; transform:translateX(-50%);
+    width:900px; height:640px; border-radius:50%;
+    background:radial-gradient(circle, rgba(16,163,127,.13), transparent 70%);
+    pointer-events:none;
+  }
+  .pill {
+    display:inline-flex; align-items:center; gap:7px; padding:6px 14px;
+    border-radius:999px; background:var(--card); border:1px solid var(--border);
+    font-size:13px; color:var(--muted); margin-bottom:24px;
+  }
+  .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  h1 {
+    font-size:clamp(34px,6vw,60px); line-height:1.08; letter-spacing:-.03em;
+    font-weight:700; margin-bottom:22px;
+  }
+  h1 em { font-style:normal; color:var(--accent); }
+  .sub { font-size:clamp(16px,2vw,19px); color:var(--muted); max-width:640px; margin:0 auto 36px; }
+  .cta-row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
+  .hero-note { font-size:13.5px; color:var(--muted); display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+  .hero-note span { display:flex; align-items:center; gap:6px; }
 
-  /* Search + filter */
-  .bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:26px 0 18px}
-  .search{flex:1;min-width:220px;position:relative}
-  .search input{width:100%;padding:11px 14px 11px 38px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff;outline:none}
-  .search input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
-  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.45}
-  .cats{display:flex;gap:8px;flex-wrap:wrap}
-  .cat{padding:9px 16px;border-radius:20px;border:1px solid var(--line);background:#fff;font-size:13.5px;cursor:pointer;font-weight:500;color:#475569;transition:.15s;white-space:nowrap}
-  .cat:hover{border-color:#cbd5e1}
-  .cat.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  /* === STATS BAR === */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden; margin:56px 0; }
+  .stat { background:var(--bg2); padding:28px 20px; text-align:center; }
+  .stat b { display:block; font-size:30px; font-weight:700; letter-spacing:-.02em; color:var(--accent); }
+  .stat small { color:var(--muted); font-size:13.5px; }
 
-  /* Grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin-top:6px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
-  .card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,23,42,.09)}
-  .thumb{height:104px;display:flex;align-items:center;justify-content:center;font-size:42px;background:linear-gradient(135deg,#eff6ff,#dbeafe)}
-  .cbody{padding:15px;flex:1;display:flex;flex-direction:column;gap:7px}
-  .ctag{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
-  .cname{font-weight:700;font-size:15.5px;line-height:1.3}
-  .cdesc{font-size:13px;color:var(--muted);line-height:1.45;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .cfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
-  .price{font-weight:800;font-size:17px;color:var(--brand)}
-  .stock{font-size:11.5px;color:var(--ok);font-weight:600}
-  .stock.low{color:var(--warn)}
-  .stock.out{color:#ef4444}
-  .buy{background:var(--brand);color:#fff;border:none;padding:9px 15px;border-radius:9px;font-weight:600;font-size:13.5px;cursor:pointer;transition:.15s}
-  .buy:hover{background:var(--brand-dark)}
-  .buy:disabled{background:#cbd5e1;cursor:not-allowed}
+  /* === SECTIONS === */
+  section { padding:76px 0; }
+  .sec-head { text-align:center; margin-bottom:52px; }
+  .sec-tag { font-size:13px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+  h2 { font-size:clamp(26px,4vw,40px); letter-spacing:-.025em; line-height:1.15; font-weight:700; }
+  .sec-sub { color:var(--muted); max-width:560px; margin:14px auto 0; font-size:16px; }
 
-  /* Cart drawer */
-  .overlay{position:fixed;inset:0;background:rgba(15,23,42,.5);opacity:0;pointer-events:none;transition:.2s;z-index:90}
-  .overlay.on{opacity:1;pointer-events:auto}
-  .drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,92vw);background:#fff;transform:translateX(100%);transition:.25s;z-index:100;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.15)}
-  .drawer.on{transform:none}
-  .dhead{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-  .dhead h3{font-size:17px;font-weight:700}
-  .x{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1}
-  .ditems{flex:1;overflow-y:auto;padding:12px 20px}
-  .citem{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f1f5f9;align-items:center}
-  .citem .em{font-size:26px}
-  .citem .info{flex:1;min-width:0}
-  .citem .nm{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .citem .pr{font-size:13px;color:var(--brand);font-weight:700}
-  .qty{display:flex;align-items:center;gap:7px}
-  .qty button{width:24px;height:24px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;font-weight:700;color:var(--ink)}
-  .qty span{min-width:20px;text-align:center;font-size:13px;font-weight:600}
-  .dfoot{padding:18px 20px;border-top:1px solid var(--line);background:#f8fafc}
-  .row{display:flex;justify-content:space-between;margin-bottom:12px;font-size:15px}
-  .row b{font-size:18px;color:var(--brand)}
-  .checkout{width:100%;background:var(--brand);color:#fff;border:none;padding:14px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer}
-  .checkout:hover{background:var(--brand-dark)}
-  .empty{text-align:center;padding:50px 20px;color:var(--muted)}
-  .empty .big{font-size:46px;margin-bottom:12px}
+  /* === PRODUCT CARDS === */
+  .cat { margin-bottom:44px; }
+  .cat-head {
+    display:flex; align-items:center; gap:11px; margin-bottom:18px;
+    padding-bottom:14px; border-bottom:1px solid var(--border);
+  }
+  .cat-icon { font-size:22px; }
+  .cat-head h3 { font-size:19px; font-weight:650; letter-spacing:-.01em; }
+  .cat-count { margin-left:auto; font-size:13px; color:var(--muted); background:var(--card);
+    padding:3px 10px; border-radius:999px; border:1px solid var(--border); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:16px; }
+  .card {
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px; display:flex; flex-direction:column; transition:all .18s;
+  }
+  .card:hover { border-color:#3a3a42; transform:translateY(-3px); }
+  .card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:12px; }
+  .card-name { font-weight:640; font-size:16px; letter-spacing:-.01em; line-height:1.35; }
+  .badge { font-size:11px; padding:3px 9px; border-radius:999px; white-space:nowrap;
+    background:rgba(16,163,127,.13); color:var(--accent); border:1px solid rgba(16,163,127,.28); font-weight:600; }
+  .card-desc { color:var(--muted); font-size:13.5px; white-space:pre-line; flex:1; margin-bottom:18px; line-height:1.55; }
+  .card-foot { display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding-top:16px; border-top:1px solid var(--border); }
+  .price { font-size:23px; font-weight:700; letter-spacing:-.02em; }
+  .price small { font-size:12.5px; color:var(--muted); font-weight:400; display:block; }
 
-  /* Toast */
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:500;z-index:200;transition:.25s;opacity:0}
-  .toast.on{transform:translateX(-50%);opacity:1}
+  /* === STEPS === */
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:20px; }
+  .step { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:26px; }
+  .step b { display:block; font-size:13px; color:var(--accent); font-weight:700; letter-spacing:.06em; margin-bottom:12px; }
+  .step h4 { font-size:16.5px; margin-bottom:8px; font-weight:640; }
+  .step p { color:var(--muted); font-size:14px; }
 
-  section{padding:34px 0}
-  .stitle{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
-  .ssub{color:var(--muted);font-size:14.5px;margin-bottom:4px}
-  footer{background:var(--ink);color:#94a3b8;padding:34px 0;margin-top:40px;font-size:14px;text-align:center}
-  footer a{color:#cbd5e1}
-  .status{font-size:12px;opacity:.75;margin-top:8px}
-  @media(max-width:600px){
-    .head nav{display:none}
-    .hero{padding:44px 0}
-    .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:13px}
-    .thumb{height:84px;font-size:34px}
+  /* === FEATURES === */
+  .feats { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; }
+  .feat { display:flex; gap:14px; padding:24px; background:var(--card);
+    border:1px solid var(--border); border-radius:var(--radius); }
+  .feat .tick { color:var(--accent); font-size:19px; flex-shrink:0; }
+  .feat h4 { font-size:16px; margin-bottom:6px; font-weight:640; }
+  .feat p { color:var(--muted); font-size:13.8px; }
+
+  /* === TESTIMONIAL === */
+  .quotes { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }
+  .quote { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:26px; }
+  .stars { color:#fbbf24; font-size:14px; margin-bottom:14px; letter-spacing:1px; }
+  .quote p { font-size:15px; margin-bottom:20px; line-height:1.6; }
+  .who { display:flex; align-items:center; gap:12px; }
+  .av { width:40px; height:40px; border-radius:50%; background:var(--bg2); border:1px solid var(--border);
+    display:grid; place-items:center; font-weight:700; font-size:14px; color:var(--accent); }
+  .who b { display:block; font-size:14.5px; font-weight:640; }
+  .who small { color:var(--muted); font-size:12.8px; }
+
+  /* === OFFER === */
+  .offer {
+    background:linear-gradient(160deg,#141416,#0e0e10); border:1px solid var(--border);
+    border-radius:20px; padding:52px 40px; text-align:center; max-width:680px; margin:0 auto;
+  }
+  .offer .tagline { font-size:13px; color:var(--accent); font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; margin-bottom:16px; }
+  .offer h2 { margin-bottom:16px; }
+  .offer .lead { color:var(--muted); margin-bottom:32px; }
+  .price-big { font-size:56px; font-weight:700; letter-spacing:-.03em; line-height:1; }
+  .price-was { color:var(--muted); text-decoration:line-through; font-size:19px; margin-left:12px; }
+  .checks { list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:12px; margin:34px 0; text-align:left; }
+  .checks li { display:flex; gap:10px; font-size:14.5px; color:#d4d4d8; }
+  .checks li::before { content:"✓"; color:var(--accent); font-weight:700; }
+  .secure { font-size:13px; color:var(--muted); margin-top:18px; }
+
+  /* === FAQ === */
+  .faq { max-width:760px; margin:0 auto; }
+  details { background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    margin-bottom:12px; overflow:hidden; }
+  summary { padding:20px 24px; cursor:pointer; font-weight:600; font-size:15.5px;
+    list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:"+"; color:var(--accent); font-size:22px; font-weight:400; }
+  details[open] summary::after { content:"−"; }
+  details p { padding:0 24px 22px; color:var(--muted); font-size:14.5px; }
+
+  /* === FOOTER === */
+  footer { border-top:1px solid var(--border); padding:44px 0; text-align:center; color:var(--muted); font-size:14px; }
+  footer a { color:var(--accent); text-decoration:none; }
+  .footer-links { display:flex; gap:22px; justify-content:center; margin-bottom:18px; flex-wrap:wrap; }
+
+  /* === LOADING === */
+  .loader { text-align:center; padding:60px 0; color:var(--muted); }
+  .spin { width:34px; height:34px; border:3px solid var(--border); border-top-color:var(--accent);
+    border-radius:50%; animation:sp 0.8s linear infinite; margin:0 auto 16px; }
+  @keyframes sp { to { transform:rotate(360deg); } }
+
+  @media (max-width:640px) {
+    .nav-links a:not(.btn) { display:none; }
+    header { padding:60px 0 48px; }
+    section { padding:56px 0; }
+    .offer { padding:38px 24px; }
+    .price-big { font-size:44px; }
   }
 </style>
 </head>
 <body>
 
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo">BYINS<span>Store</span></div>
+    <div class="nav-links">
+      <a href="#produk">Produk</a>
+      <a href="#cara">Cara Guna</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://t.me/byinsautoorderbot" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Beli Sekarang</a>
+    </div>
+  </div>
+</nav>
+
 <header>
-  <div class="wrap head">
-    <div class="logo">BYINS<span> Store</span></div>
-    <nav>
-      <a href="#produk">Semua Produk</a>
-      <a href="#produk" onclick="scrollToCat('Netflix')">Netflix</a>
-      <a href="#produk" onclick="scrollToCat('Youtube Premium')">YouTube</a>
-      <button class="cart-btn" onclick="openCart()">🛒 Cart<span class="badge" id="badge" style="display:none">0</span></button>
-      <a class="cta-tg" id="tgLink" href="#" target="_blank" rel="noopener">Order via Telegram</a>
-    </nav>
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span> Stok tersedia · Akses serta-merta</div>
+    <h1>Akaun Premium.<br><em>Harga Rakyat.</em></h1>
+    <p class="sub">
+      Netflix, YouTube Premium, Gemini AI, CapCut Pro dan banyak lagi —
+      semua di satu tempat. Bayar sekali, guna terus.
+    </p>
+    <div class="cta-row">
+      <a href="#produk" class="btn btn-primary">Lihat Semua Produk →</a>
+      <a href="https://t.me/byinsautoorderbot" class="btn btn-ghost" target="_blank" rel="noopener">Order di Telegram</a>
+    </div>
+    <div class="hero-note">
+      <span>✓ Akses serta-merta</span>
+      <span>✓ Harga mampu milik</span>
+      <span>✓ Sokongan admin</span>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat"><b id="s-prod">—</b><small>Produk tersedia</small></div>
+      <div class="stat"><b id="s-cat">—</b><small>Kategori servis</small></div>
+      <div class="stat"><b id="s-order">—</b><small>Pesanan diproses</small></div>
+      <div class="stat"><b id="s-min">—</b><small>Harga bermula</small></div>
+    </div>
   </div>
 </header>
 
-<section class="hero">
+<section id="produk">
   <div class="wrap">
-    <h1>Premium Digital Accounts Malaysia</h1>
-    <p>Netflix, YouTube Premium, Canva, Spotify &amp; banyak lagi — penghantaran AUTO &amp; pantas, warranty penuh, harga terbaik.</p>
-    <div class="feats">
-      <span>⚡ Auto Delivery</span>
-      <span>✅ 100% Warranty</span>
-      <span>🔒 Secure Payment</span>
-      <span>💬 Support 24/7</span>
+    <div class="sec-head">
+      <div class="sec-tag">Katalog</div>
+      <h2>Satu tempat. Semua yang anda perlu.</h2>
+      <p class="sec-sub">Semua harga dikemas kini secara automatik dari sistem kami. Tekan produk untuk order di Telegram.</p>
+    </div>
+    <div id="catalog"><div class="loader"><div class="spin"></div>Memuatkan produk…</div></div>
+  </div>
+</section>
+
+<section id="cara" style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Cara Guna</div>
+      <h2>Dari pilih ke guna</h2>
+      <p class="sec-sub">Empat langkah mudah — anda boleh mula guna dalam beberapa minit.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><b>01</b><h4>Pilih produk</h4><p>Pilih servis yang anda mahu dari katalog di atas.</p></div>
+      <div class="step"><b>02</b><h4>Buat bayaran</h4><p>Bayar melalui DuitNow QR atau baki dompet dalam bot Telegram.</p></div>
+      <div class="step"><b>03</b><h4>Terima akaun</h4><p>Detail akaun dihantar terus ke Telegram anda selepas disahkan.</p></div>
+      <div class="step"><b>04</b><h4>Mula guna</h4><p>Login dan nikmati. Sokongan admin sentiasa sedia membantu.</p></div>
     </div>
   </div>
 </section>
 
-<section id="produk">
+<section>
   <div class="wrap">
-    <h2 class="stitle">Produk Kami</h2>
-    <p class="ssub" id="count">Memuatkan produk…</p>
-
-    <div class="bar">
-      <div class="search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Cari produk… (cth: Netflix)" oninput="render()">
-      </div>
-      <div class="cats" id="cats"></div>
+    <div class="sec-head">
+      <div class="sec-tag">Kenapa BYINS</div>
+      <h2>Dibina untuk kemudahan anda</h2>
     </div>
+    <div class="feats">
+      <div class="feat"><span class="tick">✓</span><div><h4>Harga mampu milik</h4><p>Dari serendah RM2 — akses premium tanpa beban kos.</p></div></div>
+      <div class="feat"><span class="tick">✓</span><div><h4>Akses serta-merta</h4><p>Order diproses secara automatik melalui bot Telegram kami.</p></div></div>
+      <div class="feat"><span class="tick">✓</span><div><h4>Sokongan admin</h4><p>Ada masalah? Admin sedia membantu melalui Telegram.</p></div></div>
+    </div>
+  </div>
+</section>
 
-    <div id="area"><div class="empty"><div class="big">⏳</div>Memuatkan produk…</div></div>
+<section style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Testimoni</div>
+      <h2>Kata pelanggan kami</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>"Order Netflix malam tadi, pagi ni dah boleh guna. Harga pun jauh lebih murah dari tempat lain."</p>
+        <div class="who"><div class="av">AN</div><div><b>Aina N.</b><small>Pelanggan tetap</small></div></div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>"Beli Gemini AI Pro untuk kerja, memang berbaloi. Proses pun senang, terus dapat dalam Telegram."</p>
+        <div class="who"><div class="av">FR</div><div><b>Farid R.</b><small>Freelancer</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="offer">
+      <div class="tagline">Sedia untuk mula?</div>
+      <h2>Semua dalam satu bot</h2>
+      <p class="lead">Pilih produk, bayar, terima akaun — semuanya di Telegram.</p>
+      <a href="https://t.me/byinsautoorderbot" class="btn btn-primary" target="_blank" rel="noopener" style="padding:16px 34px; font-size:16px;">Buka Bot Telegram →</a>
+      <div class="secure">🔒 Transaksi selamat · Diproses serta-merta</div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">FAQ</div>
+      <h2>Ada soalan?</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Bagaimana cara untuk membeli?</summary><p>Tekan mana-mana butang "Beli Sekarang" untuk buka bot Telegram kami. Pilih produk, buat bayaran, dan detail akaun akan dihantar terus kepada anda.</p></details>
+      <details><summary>Berapa lama untuk terima akaun?</summary><p>Kebanyakan order diproses serta-merta selepas pembayaran disahkan. Jika berlaku kelewatan, admin akan maklumkan melalui Telegram.</p></details>
+      <details><summary>Ada jaminan (warranty)?</summary><p>Setiap produk ada terma sendiri — sila baca penerangan pada setiap produk. Jika ada masalah, hubungi admin untuk bantuan.</p></details>
+      <details><summary>Kaedah bayaran apa yang diterima?</summary><p>Kami menerima DuitNow QR (TnG eWallet / Online Banking) dan baki dompet dalam bot Telegram.</p></details>
+      <details><summary>Boleh guna untuk berapa peranti?</summary><p>Bergantung kepada produk. Kebanyakan akaun Netflix/streaming untuk 1 peranti 1 profil — sila rujuk penerangan produk.</p></details>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>© 2026 BYINS Store — Premium Digital Accounts Malaysia</p>
-    <p class="status" id="status">Menghubung ke sistem…</p>
+    <div class="footer-links">
+      <a href="#produk">Produk</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://t.me/byinsautoorderbot" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://t.me/real_inspectro" target="_blank" rel="noopener">Hubungi Admin</a>
+    </div>
+    <p>© 2026 BYINS Store. Hak cipta terpelihara.</p>
   </div>
 </footer>
 
-<!-- Cart -->
-<div class="overlay" id="ov" onclick="closeCart()"></div>
-<aside class="drawer" id="drawer">
-  <div class="dhead">
-    <h3>🛒 Troli Anda</h3>
-    <button class="x" onclick="closeCart()">×</button>
-  </div>
-  <div class="ditems" id="citems"></div>
-  <div class="dfoot">
-    <div class="row"><span>Jumlah</span><b id="total">RM 0.00</b></div>
-    <button class="checkout" onclick="checkout()">Teruskan ke Telegram →</button>
-  </div>
-</aside>
-
-<div class="toast" id="toast"></div>
-
 <script>
-// ====== KONFIGURASI ======
-const API_BASE = window.__API_BASE__ || 'https://api.byinsstore.my'; // tukar bila domain siap
-const TG_BOT   = 'https://t.me/byinsautoorderbot';                  // tukar ikut bot anda
+const API_BASE = window.__API_BASE__ || 'https://api.byinsstore.my';
+const TG = 'https://t.me/byinsautoorderbot';
 
-// ====== STATE ======
-let products = [], activeCat = 'Semua', cart = {};
-
-const $ = id => document.getElementById(id);
-const rm = c => 'RM ' + (c / 100).toFixed(2);
-const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-
-function iconFor(cat){
-  const c = (cat||'').toLowerCase();
-  if (c.includes('netflix')) return '🎬';
-  if (c.includes('youtube')) return '▶️';
-  if (c.includes('canva')) return '🎨';
-  if (c.includes('capcut')) return '🎞️';
-  if (c.includes('spotify')) return '🎵';
-  if (c.includes('aws')) return '☁️';
-  if (c.includes('vpn')) return '🛡️';
-  if (c.includes('gemini')||c.includes('ai')) return '✨';
-  return '📦';
-}
-
-// ====== MUAT PRODUK ======
-async function load(){
-  try{
-    const r = await fetch(API_BASE + '/api/products');
-    const d = await r.json();
-    if(!d.success) throw new Error(d.error||'Ralat');
-    products = d.products || [];
-    $('count').textContent = products.length + ' produk tersedia';
-    $('status').textContent = '✅ ' + products.length + ' produk dimuatkan dari sistem';
-    renderCats(d.categories || []);
-    render();
-  }catch(e){
-    $('area').innerHTML = '<div class="empty"><div class="big">⚠️</div>Gagal memuatkan produk.<br><small>' + esc(e.message) + '</small></div>';
-    $('status').textContent = '❌ ' + e.message;
+async function loadProducts() {
+  try {
+    const r = await fetch(API_BASE + '/api/products', { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    render(data);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('catalog').innerHTML =
+      '<div class="loader">⚠️ Gagal memuatkan produk. Sila muat semula halaman.<br><br>' +
+      '<a href="' + TG + '" class="btn btn-primary" target="_blank" rel="noopener">Buka Bot Telegram</a></div>';
   }
 }
 
-function renderCats(cats){
-  const all = ['Semua', ...cats];
-  $('cats').innerHTML = all.map(c =>
-    '<span class="cat' + (c===activeCat?' active':'') + '" onclick="setCat(\'' + esc(c).replace(/'/g,"\\'") + '\')">' + esc(c) + '</span>'
-  ).join('');
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
 }
 
-function setCat(c){ activeCat = c; renderCats([...new Set(products.map(p=>p.category))]); render(); }
-function scrollToCat(c){ setCat(c); document.getElementById('produk').scrollIntoView({behavior:'smooth'}); }
+function render(data) {
+  // Stats
+  const s = data.stats || {};
+  document.getElementById('s-prod').textContent = s.totalProducts || '—';
+  document.getElementById('s-cat').textContent = s.totalCategories || '—';
+  document.getElementById('s-min').textContent = s.minPrice != null ? 'RM' + s.minPrice.toFixed(0) : '—';
+  fetch(API_BASE + '/api/stats').then(r => r.json()).then(st => {
+    document.getElementById('s-order').textContent = (st.totalOrders || 0) + '+';
+  }).catch(() => { document.getElementById('s-order').textContent = '—'; });
 
-function render(){
-  const q = ($('q').value||'').toLowerCase().trim();
-  let list = products;
-  if(activeCat !== 'Semua') list = list.filter(p => p.category === activeCat);
-  if(q) list = list.filter(p => (p.name||'').toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q));
-
-  if(!list.length){
-    $('area').innerHTML = '<div class="empty"><div class="big">📭</div>Tiada produk sepadan.</div>';
+  const cats = data.categories || [];
+  if (!cats.length) {
+    document.getElementById('catalog').innerHTML = '<div class="loader">Tiada produk buat masa ini.</div>';
     return;
   }
 
-  $('area').innerHTML = '<div class="grid">' + list.map(p => {
-    const out = (p.stock||0) <= 0;
-    const low = !out && p.stock <= 2;
-    const stockCls = out ? 'stock out' : (low ? 'stock low' : 'stock');
-    const stockTxt = out ? '⛔ Stok habis' : ('✔ Stok: ' + p.stock);
-    return '<div class="card">' +
-      '<div class="thumb">' + iconFor(p.category) + '</div>' +
-      '<div class="cbody">' +
-        '<div class="ctag">' + esc(p.category) + '</div>' +
-        '<div class="cname">' + esc(p.name) + '</div>' +
-        '<div class="cdesc">' + esc(p.description||'') + '</div>' +
-        '<div class="' + stockCls + '">' + stockTxt + '</div>' +
-        '<div class="cfoot">' +
-          '<span class="price">' + rm(p.price) + '</span>' +
-          '<button class="buy" ' + (out?'disabled':'') + ' onclick="add(\'' + esc(p.productId) + '\')">' + (out?'Habis':'Tambah') + '</button>' +
-        '</div>' +
-      '</div></div>';
-  }).join('') + '</div>';
+  let html = '';
+  for (const c of cats) {
+    html += '<div class="cat">';
+    html += '<div class="cat-head"><span class="cat-icon">' + esc(c.icon) + '</span>';
+    html += '<h3>' + esc(c.category) + '</h3>';
+    html += '<span class="cat-count">' + c.items.length + ' pilihan</span></div>';
+    html += '<div class="grid">';
+    for (const p of c.items) {
+      html += '<div class="card">';
+      html += '<div class="card-top"><div class="card-name">' + esc(p.name) + '</div>';
+      if (p.duration && p.duration !== p.name) html += '<span class="badge">' + esc(p.duration) + '</span>';
+      html += '</div>';
+      if (p.description) html += '<div class="card-desc">' + esc(p.description) + '</div>';
+      html += '<div class="card-foot"><div class="price">' + esc(p.priceDisplay) + '<small>sekali bayar</small></div>';
+      html += '<a href="' + TG + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Beli</a>';
+      html += '</div></div>';
+    }
+    html += '</div></div>';
+  }
+  document.getElementById('catalog').innerHTML = html;
 }
 
-// ====== CART ======
-function add(pid){
-  const p = products.find(x => x.productId === pid);
-  if(!p) return;
-  const cur = cart[pid] ? cart[pid].qty : 0;
-  if(cur + 1 > p.stock){ toast('⚠️ Stok tidak mencukupi'); return; }
-  cart[pid] = { p, qty: cur + 1 };
-  syncCart(); toast('✅ Ditambah: ' + p.name);
-}
-function inc(pid){ const it=cart[pid]; if(!it) return; if(it.qty+1 > it.p.stock){toast('⚠️ Stok maksimum');return;} it.qty++; syncCart(); }
-function dec(pid){ const it=cart[pid]; if(!it) return; it.qty--; if(it.qty<=0) delete cart[pid]; syncCart(); }
-
-function syncCart(){
-  const items = Object.values(cart);
-  const n = items.reduce((s,i)=>s+i.qty,0);
-  $('badge').style.display = n ? 'flex' : 'none';
-  $('badge').textContent = n;
-  $('total').textContent = rm(items.reduce((s,i)=>s + i.p.price*i.qty, 0));
-
-  $('citems').innerHTML = items.length ? items.map(i =>
-    '<div class="citem">' +
-      '<span class="em">' + iconFor(i.p.category) + '</span>' +
-      '<div class="info"><div class="nm">' + esc(i.p.name) + '</div><div class="pr">' + rm(i.p.price) + '</div></div>' +
-      '<div class="qty"><button onclick="dec(\'' + esc(i.p.productId) + '\')">−</button><span>' + i.qty + '</span><button onclick="inc(\'' + esc(i.p.productId) + '\')">+</button></div>' +
-    '</div>'
-  ).join('') : '<div class="empty"><div class="big">🛒</div>Troli kosong</div>';
-}
-
-function openCart(){ $('drawer').classList.add('on'); $('ov').classList.add('on'); syncCart(); }
-function closeCart(){ $('drawer').classList.remove('on'); $('ov').classList.remove('on'); }
-
-// ====== CHECKOUT (hantar ke Telegram) ======
-function checkout(){
-  const items = Object.values(cart);
-  if(!items.length){ toast('🛒 Troli kosong'); return; }
-  // Buat mesej pesanan untuk bot
-  const lines = items.map(i => '• ' + i.p.name + ' x' + i.qty + ' — ' + rm(i.p.price*i.qty)).join('\n');
-  const total = rm(items.reduce((s,i)=>s + i.p.price*i.qty, 0));
-  const text = 'Saya nak order:\n' + lines + '\n\nJumlah: ' + total;
-  const url = TG_BOT + '?text=' + encodeURIComponent(text);
-  window.open(url, '_blank');
-  toast('📲 Membuka Telegram…');
-}
-
-// ====== TOAST ======
-let tT;
-function toast(msg){
-  const t = $('toast'); t.textContent = msg; t.classList.add('on');
-  clearTimeout(tT); tT = setTimeout(()=>t.classList.remove('on'), 2200);
-}
-
-// ====== INIT ======
-$('tgLink').href = TG_BOT;
-load();
+loadProducts();
 </script>
 </body>
 </html>
