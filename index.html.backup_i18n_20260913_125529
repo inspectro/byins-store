@@ -192,28 +192,25 @@
   <div class="wrap nav-in">
     <div class="logo">BYINS<span>Store</span></div>
     <div class="nav-links">
-      <a href="#produk" data-i18n="nav_products">Produk</a>
-      <a href="#cara" data-i18n="nav_how">Cara Guna</a>
-      <a href="#faq" data-i18n="nav_faq">FAQ</a>
-      <button id="langBtn" class="btn btn-ghost btn-sm" onclick="toggleLang()" title="Tukar bahasa / Switch language">
-        <span id="langLabel">EN</span>
-      </button>
-      <a href="https://t.me/byinsautoorderbot" data-tg class="btn btn-primary btn-sm" target="_blank" rel="noopener" data-i18n="nav_buy">Beli Sekarang</a>
+      <a href="#produk">Produk</a>
+      <a href="#cara">Cara Guna</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://t.me/byinsautoorderbot" data-tg class="btn btn-primary btn-sm" target="_blank" rel="noopener">Beli Sekarang</a>
     </div>
   </div>
 </nav>
 
 <header>
   <div class="wrap">
-    <div class="pill"><span class="dot"></span> <span id="hero-badge" data-i18n="hero_badge">Stok tersedia · Akses serta-merta</span></div>
-    <h1><span id="hero-title1" data-i18n="hero_t1">Akaun Premium.</span><br><em id="hero-title2" data-i18n="hero_t2">Harga Rakyat.</em></h1>
-    <p class="sub" id="hero-sub" data-i18n="hero_sub">
+    <div class="pill"><span class="dot"></span> <span id="hero-badge">Stok tersedia · Akses serta-merta</span></div>
+    <h1><span id="hero-title1">Akaun Premium.</span><br><em id="hero-title2">Harga Rakyat.</em></h1>
+    <p class="sub" id="hero-sub">
       Netflix, YouTube Premium, Gemini AI, CapCut Pro dan banyak lagi —
       semua di satu tempat. Bayar sekali, guna terus.
     </p>
     <div class="cta-row">
-      <a href="#produk" class="btn btn-primary"><span id="hero-cta1" data-i18n="hero_cta1">Lihat Semua Produk</span> →</a>
-      <a href="https://t.me/byinsautoorderbot" class="btn btn-ghost" data-tg target="_blank" rel="noopener"><span id="hero-cta2" data-i18n="hero_cta2">Order di Telegram</span></a>
+      <a href="#produk" class="btn btn-primary"><span id="hero-cta1">Lihat Semua Produk</span> →</a>
+      <a href="https://t.me/byinsautoorderbot" class="btn btn-ghost" data-tg target="_blank" rel="noopener"><span id="hero-cta2">Order di Telegram</span></a>
     </div>
     <div class="hero-note" id="hero-notes">
       <span>✓ Akses serta-merta</span>
@@ -233,9 +230,9 @@
 <section id="produk">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-tag" id="cat-tag" data-i18n="cat_tag">Katalog</div>
-      <h2 id="cat-title" data-i18n="cat_title">Satu tempat. Semua yang anda perlu.</h2>
-      <p class="sec-sub" id="cat-sub" data-i18n="cat_sub">Semua harga dikemas kini secara automatik dari sistem kami. Tekan produk untuk order di Telegram.</p>
+      <div class="sec-tag" id="cat-tag">Katalog</div>
+      <h2 id="cat-title">Satu tempat. Semua yang anda perlu.</h2>
+      <p class="sec-sub" id="cat-sub">Semua harga dikemas kini secara automatik dari sistem kami. Tekan produk untuk order di Telegram.</p>
     </div>
     <div id="catalog"><div class="loader"><div class="spin"></div>Memuatkan produk…</div></div>
   </div>
@@ -244,15 +241,15 @@
 <section id="cara" style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-tag" id="steps-tag" data-i18n="steps_tag">Cara Guna</div>
-      <h2 id="steps-title" data-i18n="steps_title">Dari pilih ke guna</h2>
+      <div class="sec-tag" id="steps-tag">Cara Guna</div>
+      <h2 id="steps-title">Dari pilih ke guna</h2>
       <p class="sec-sub">Empat langkah mudah — anda boleh mula guna dalam beberapa minit.</p>
     </div>
     <div class="steps" id="steps-box">
-      <div class="step"><b>01</b><h4 data-i18n="step1_t">Pilih produk</h4><p data-i18n="step1_d">Pilih servis yang anda mahu dari katalog di atas.</p></div>
-      <div class="step"><b>02</b><h4 data-i18n="step2_t">Buat bayaran</h4><p data-i18n="step2_d">Bayar melalui DuitNow QR atau baki dompet dalam bot Telegram.</p></div>
-      <div class="step"><b>03</b><h4 data-i18n="step3_t">Terima akaun</h4><p data-i18n="step3_d">Detail akaun dihantar terus ke Telegram anda selepas disahkan.</p></div>
-      <div class="step"><b>04</b><h4 data-i18n="step4_t">Mula guna</h4><p data-i18n="step4_d">Login dan nikmati. Sokongan admin sentiasa sedia membantu.</p></div>
+      <div class="step"><b>01</b><h4>Pilih produk</h4><p>Pilih servis yang anda mahu dari katalog di atas.</p></div>
+      <div class="step"><b>02</b><h4>Buat bayaran</h4><p>Bayar melalui DuitNow QR atau baki dompet dalam bot Telegram.</p></div>
+      <div class="step"><b>03</b><h4>Terima akaun</h4><p>Detail akaun dihantar terus ke Telegram anda selepas disahkan.</p></div>
+      <div class="step"><b>04</b><h4>Mula guna</h4><p>Login dan nikmati. Sokongan admin sentiasa sedia membantu.</p></div>
     </div>
   </div>
 </section>
@@ -260,13 +257,13 @@
 <section>
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-tag" id="feat-tag" data-i18n="feat_tag">Kenapa BYINS</div>
-      <h2 id="feat-title" data-i18n="feat_title">Dibina untuk kemudahan anda</h2>
+      <div class="sec-tag" id="feat-tag">Kenapa BYINS</div>
+      <h2 id="feat-title">Dibina untuk kemudahan anda</h2>
     </div>
     <div class="feats">
-      <div class="feat"><span class="tick">✓</span><div><h4 data-i18n="feat1_t">Harga mampu milik</h4><p data-i18n="feat1_d">Dari serendah RM2 — akses premium tanpa beban kos.</p></div></div>
-      <div class="feat"><span class="tick">✓</span><div><h4 data-i18n="feat2_t">Akses serta-merta</h4><p data-i18n="feat2_d">Order diproses secara automatik melalui bot Telegram kami.</p></div></div>
-      <div class="feat"><span class="tick">✓</span><div><h4 data-i18n="feat3_t">Sokongan admin</h4><p data-i18n="feat3_d">Ada masalah? Admin sedia membantu melalui Telegram.</p></div></div>
+      <div class="feat"><span class="tick">✓</span><div><h4>Harga mampu milik</h4><p>Dari serendah RM2 — akses premium tanpa beban kos.</p></div></div>
+      <div class="feat"><span class="tick">✓</span><div><h4>Akses serta-merta</h4><p>Order diproses secara automatik melalui bot Telegram kami.</p></div></div>
+      <div class="feat"><span class="tick">✓</span><div><h4>Sokongan admin</h4><p>Ada masalah? Admin sedia membantu melalui Telegram.</p></div></div>
     </div>
   </div>
 </section>
@@ -274,19 +271,19 @@
 <section style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-tag" data-i18n="quote_tag">Testimoni</div>
-      <h2 data-i18n="quote_title">Kata pelanggan kami</h2>
+      <div class="sec-tag">Testimoni</div>
+      <h2>Kata pelanggan kami</h2>
     </div>
     <div class="quotes">
       <div class="quote">
         <div class="stars">★★★★★</div>
-        <p data-i18n="q1">"Order Netflix malam tadi, pagi ni dah boleh guna. Harga pun jauh lebih murah dari tempat lain."</p>
-        <div class="who"><div class="av">AN</div><div><b>Aina N.</b><small data-i18n="q1_role">Pelanggan tetap</small></div></div>
+        <p>"Order Netflix malam tadi, pagi ni dah boleh guna. Harga pun jauh lebih murah dari tempat lain."</p>
+        <div class="who"><div class="av">AN</div><div><b>Aina N.</b><small>Pelanggan tetap</small></div></div>
       </div>
       <div class="quote">
         <div class="stars">★★★★★</div>
-        <p data-i18n="q2">"Beli Gemini AI Pro untuk kerja, memang berbaloi. Proses pun senang, terus dapat dalam Telegram."</p>
-        <div class="who"><div class="av">FR</div><div><b>Farid R.</b><small data-i18n="q2_role">Freelancer</small></div></div>
+        <p>"Beli Gemini AI Pro untuk kerja, memang berbaloi. Proses pun senang, terus dapat dalam Telegram."</p>
+        <div class="who"><div class="av">FR</div><div><b>Farid R.</b><small>Freelancer</small></div></div>
       </div>
     </div>
   </div>
@@ -296,10 +293,10 @@
   <div class="wrap">
     <div class="offer">
       <div class="tagline">Sedia untuk mula?</div>
-      <h2 data-i18n="cta_title">Semua dalam satu bot</h2>
-      <p class="lead" data-i18n="cta_lead">Pilih produk, bayar, terima akaun — semuanya di Telegram.</p>
-      <a href="https://t.me/byinsautoorderbot" data-tg class="btn btn-primary" target="_blank" rel="noopener" style="padding:16px 34px; font-size:16px;" data-i18n="cta_btn">Buka Bot Telegram →</a>
-      <div class="secure"><span data-i18n="cta_secure">🔒 Transaksi selamat · Diproses serta-merta</span></div>
+      <h2>Semua dalam satu bot</h2>
+      <p class="lead">Pilih produk, bayar, terima akaun — semuanya di Telegram.</p>
+      <a href="https://t.me/byinsautoorderbot" data-tg class="btn btn-primary" target="_blank" rel="noopener" style="padding:16px 34px; font-size:16px;">Buka Bot Telegram →</a>
+      <div class="secure">🔒 Transaksi selamat · Diproses serta-merta</div>
     </div>
   </div>
 </section>
@@ -307,15 +304,15 @@
 <section id="faq">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-tag" data-i18n="faq_tag">FAQ</div>
-      <h2 data-i18n="faq_title">Ada soalan?</h2>
+      <div class="sec-tag">FAQ</div>
+      <h2>Ada soalan?</h2>
     </div>
     <div class="faq">
-      <details><summary data-i18n="faq1_q">Bagaimana cara untuk membeli?</summary><p data-i18n="faq1_a">Tekan mana-mana butang "Beli Sekarang" untuk buka bot Telegram kami. Pilih produk, buat bayaran, dan detail akaun akan dihantar terus kepada anda.</p></details>
-      <details><summary data-i18n="faq2_q">Berapa lama untuk terima akaun?</summary><p data-i18n="faq2_a">Kebanyakan order diproses serta-merta selepas pembayaran disahkan. Jika berlaku kelewatan, admin akan maklumkan melalui Telegram.</p></details>
-      <details><summary data-i18n="faq3_q">Ada jaminan (warranty)?</summary><p data-i18n="faq3_a">Setiap produk ada terma sendiri — sila baca penerangan pada setiap produk. Jika ada masalah, hubungi admin untuk bantuan.</p></details>
-      <details><summary data-i18n="faq4_q">Kaedah bayaran yang diterima?</summary><p data-i18n="faq4_a">Kami menerima DuitNow QR (TnG eWallet / Online Banking) dan baki dompet dalam bot Telegram.</p></details>
-      <details><summary data-i18n="faq5_q">Boleh guna untuk berapa peranti?</summary><p data-i18n="faq5_a">Bergantung kepada produk. Kebanyakan akaun Netflix/streaming untuk 1 peranti 1 profil — sila rujuk penerangan produk.</p></details>
+      <details><summary>Bagaimana cara untuk membeli?</summary><p>Tekan mana-mana butang "Beli Sekarang" untuk buka bot Telegram kami. Pilih produk, buat bayaran, dan detail akaun akan dihantar terus kepada anda.</p></details>
+      <details><summary>Berapa lama untuk terima akaun?</summary><p>Kebanyakan order diproses serta-merta selepas pembayaran disahkan. Jika berlaku kelewatan, admin akan maklumkan melalui Telegram.</p></details>
+      <details><summary>Ada jaminan (warranty)?</summary><p>Setiap produk ada terma sendiri — sila baca penerangan pada setiap produk. Jika ada masalah, hubungi admin untuk bantuan.</p></details>
+      <details><summary>Kaedah bayaran apa yang diterima?</summary><p>Kami menerima DuitNow QR (TnG eWallet / Online Banking) dan baki dompet dalam bot Telegram.</p></details>
+      <details><summary>Boleh guna untuk berapa peranti?</summary><p>Bergantung kepada produk. Kebanyakan akaun Netflix/streaming untuk 1 peranti 1 profil — sila rujuk penerangan produk.</p></details>
     </div>
   </div>
 </section>
@@ -326,9 +323,9 @@
       <a href="#produk">Produk</a>
       <a href="#faq">FAQ</a>
       <a href="https://t.me/byinsautoorderbot" data-tg target="_blank" rel="noopener">Telegram</a>
-      <a id="footer-admin" href="https://t.me/real_inspectro" target="_blank" rel="noopener" data-i18n="footer_admin">Hubungi Admin</a>
+      <a id="footer-admin" href="https://t.me/real_inspectro" target="_blank" rel="noopener">Hubungi Admin</a>
     </div>
-    <p data-i18n="footer_copy">© 2026 BYINS Store. Hak cipta terpelihara.</p>
+    <p>© 2026 BYINS Store. Hak cipta terpelihara.</p>
   </div>
 </footer>
 
@@ -400,133 +397,6 @@ function applyConfig(c) {
     if (c.contact.telegram) document.querySelectorAll('a[data-tg]').forEach(a => a.href = c.contact.telegram);
     if (c.contact.admin)    setHref('footer-admin', c.contact.admin);
   }
-  applyLang();
-}
-
-
-// ==================== i18n (BM / EN) ====================
-const I18N = {
-  ms: {
-    nav_products: "Produk", nav_how: "Cara Guna", nav_faq: "FAQ", nav_buy: "Beli Sekarang",
-    hero_badge: "Stok tersedia · Akses serta-merta",
-    hero_t1: "Akaun Premium.", hero_t2: "Harga Rakyat.",
-    hero_sub: "Netflix, YouTube Premium, Gemini AI, CapCut Pro dan banyak lagi — semua di satu tempat. Bayar sekali, guna terus.",
-    hero_cta1: "Lihat Semua Produk", hero_cta2: "Order di Telegram",
-    note1: "Akses serta-merta", note2: "Harga mampu milik", note3: "Sokongan admin",
-    stat_products: "Produk tersedia", stat_cat: "Kategori servis",
-    stat_orders: "Pesanan diproses", stat_min: "Harga bermula",
-    cat_tag: "Katalog", cat_title: "Satu tempat. Semua yang anda perlu.",
-    cat_sub: "Semua harga dikemas kini secara automatik dari sistem kami. Tekan produk untuk order di Telegram.",
-    steps_tag: "Cara Guna", steps_title: "Dari pilih ke guna",
-    steps_sub: "Empat langkah mudah — anda boleh mula guna dalam beberapa minit.",
-    step1_t: "Pilih produk", step1_d: "Pilih servis yang anda mahu dari katalog di atas.",
-    step2_t: "Buat bayaran", step2_d: "Bayar melalui DuitNow QR atau baki dompet dalam bot Telegram.",
-    step3_t: "Terima akaun", step3_d: "Detail akaun dihantar terus ke Telegram anda selepas disahkan.",
-    step4_t: "Mula guna", step4_d: "Login dan nikmati. Sokongan admin sentiasa sedia membantu.",
-    feat_tag: "Kenapa BYINS", feat_title: "Dibina untuk kemudahan anda",
-    feat1_t: "Harga mampu milik", feat1_d: "Dari serendah RM2 — akses premium tanpa beban kos.",
-    feat2_t: "Akses serta-merta", feat2_d: "Order diproses secara automatik melalui bot Telegram kami.",
-    feat3_t: "Sokongan admin", feat3_d: "Ada masalah? Admin sedia membantu melalui Telegram.",
-    quote_tag: "Testimoni", quote_title: "Kata pelanggan kami",
-    q1: '"Order Netflix malam tadi, pagi ni dah boleh guna. Harga pun jauh lebih murah dari tempat lain."',
-    q1_role: "Pelanggan tetap",
-    q2: '"Beli Gemini AI Pro untuk kerja, memang berbaloi. Proses pun senang, terus dapat dalam Telegram."',
-    q2_role: "Freelancer",
-    cta_title: "Semua dalam satu bot", cta_lead: "Pilih produk, bayar, terima akaun — semuanya di Telegram.",
-    cta_btn: "Buka Bot Telegram →", cta_secure: "🔒 Transaksi selamat · Diproses serta-merta",
-    faq_tag: "FAQ", faq_title: "Ada soalan?",
-    faq1_q: "Bagaimana cara untuk membeli?",
-    faq1_a: 'Tekan mana-mana butang "Beli Sekarang" untuk buka bot Telegram kami. Pilih produk, buat bayaran, dan detail akaun akan dihantar terus kepada anda.',
-    faq2_q: "Berapa lama untuk terima akaun?",
-    faq2_a: "Kebanyakan order diproses serta-merta selepas pembayaran disahkan. Jika berlaku kelewatan, admin akan maklumkan melalui Telegram.",
-    faq3_q: "Ada jaminan (warranty)?",
-    faq3_a: "Setiap produk ada terma sendiri — sila baca penerangan pada setiap produk. Jika ada masalah, hubungi admin untuk bantuan.",
-    faq4_q: "Kaedah bayaran yang diterima?",
-    faq4_a: "Kami menerima DuitNow QR (TnG eWallet / Online Banking) dan baki dompet dalam bot Telegram.",
-    faq5_q: "Boleh guna untuk berapa peranti?",
-    faq5_a: "Bergantung kepada produk. Kebanyakan akaun Netflix/streaming untuk 1 peranti 1 profil — sila rujuk penerangan produk.",
-    footer_admin: "Hubungi Admin", footer_copy: "© 2026 BYINS Store. Hak cipta terpelihara.",
-  },
-  en: {
-    nav_products: "Products", nav_how: "How It Works", nav_faq: "FAQ", nav_buy: "Buy Now",
-    hero_badge: "In stock · Instant access",
-    hero_t1: "Premium Accounts.", hero_t2: "Fair Prices.",
-    hero_sub: "Netflix, YouTube Premium, Gemini AI, CapCut Pro and more — all in one place. Pay once, use instantly.",
-    hero_cta1: "Browse All Products", hero_cta2: "Order on Telegram",
-    note1: "Instant access", note2: "Affordable prices", note3: "Admin support",
-    stat_products: "Available products", stat_cat: "Service categories",
-    stat_orders: "Orders processed", stat_min: "Starting from",
-    cat_tag: "Catalog", cat_title: "One place. Everything you need.",
-    cat_sub: "All prices update automatically from our system. Tap a product to order via Telegram.",
-    steps_tag: "How It Works", steps_title: "From pick to play",
-    steps_sub: "Four easy steps — you can start using in minutes.",
-    step1_t: "Pick a product", step1_d: "Choose the service you want from the catalog above.",
-    step2_t: "Make payment", step2_d: "Pay via DuitNow QR or your wallet balance in our Telegram bot.",
-    step3_t: "Receive account", step3_d: "Account details are sent straight to your Telegram once verified.",
-    step4_t: "Start using", step4_d: "Log in and enjoy. Admin support is always ready to help.",
-    feat_tag: "Why BYINS", feat_title: "Built for your convenience",
-    feat1_t: "Affordable prices", feat1_d: "From as low as RM2 — premium access without the burden.",
-    feat2_t: "Instant access", feat2_d: "Orders are processed automatically through our Telegram bot.",
-    feat3_t: "Admin support", feat3_d: "Any issue? Admin is ready to help via Telegram.",
-    quote_tag: "Testimonials", quote_title: "What our customers say",
-    q1: '"Ordered Netflix last night, was using it by morning. Way cheaper than elsewhere too."',
-    q1_role: "Regular customer",
-    q2: '"Bought Gemini AI Pro for work — totally worth it. Easy process, got it instantly on Telegram."',
-    q2_role: "Freelancer",
-    cta_title: "All in one bot", cta_lead: "Pick a product, pay, receive the account — all on Telegram.",
-    cta_btn: "Open Telegram Bot →", cta_secure: "🔒 Secure payment · Processed instantly",
-    faq_tag: "FAQ", faq_title: "Got questions?",
-    faq1_q: "How do I make a purchase?",
-    faq1_a: 'Tap any "Buy Now" button to open our Telegram bot. Pick a product, make payment, and the account details are sent to you right away.',
-    faq2_q: "How long until I receive the account?",
-    faq2_a: "Most orders are processed instantly once payment is confirmed. If there's a delay, admin will notify you via Telegram.",
-    faq3_q: "Is there any warranty?",
-    faq3_a: "Each product has its own terms — please read the description on each product. If you have an issue, contact admin for help.",
-    faq4_q: "What payment methods are accepted?",
-    faq4_a: "We accept DuitNow QR (TnG eWallet / Online Banking) and wallet balance in our Telegram bot.",
-    faq5_q: "How many devices can I use?",
-    faq5_a: "It depends on the product. Most Netflix/streaming accounts are 1 device 1 profile — please check the product description.",
-    footer_admin: "Contact Admin", footer_copy: "© 2026 BYINS Store. All rights reserved.",
-  }
-};
-
-let LANG = localStorage.getItem('byins_lang') || 'ms';
-
-function toggleLang() {
-  LANG = (LANG === 'ms') ? 'en' : 'ms';
-  localStorage.setItem('byins_lang', LANG);
-  applyLang();
-}
-
-function applyLang() {
-  const dict = I18N[LANG] || I18N.ms;
-  // data-i18n
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const k = el.getAttribute('data-i18n');
-    if (dict[k] != null) el.textContent = dict[k];
-  });
-  // Nota hero (3 span)
-  const notes = document.querySelectorAll('#hero-notes span');
-  ['note1','note2','note3'].forEach((k, i) => {
-    if (notes[i]) notes[i].textContent = '✓ ' + (dict[k] || '');
-  });
-  // Stats label
-  const statLabels = document.querySelectorAll('.stat small');
-  const sk = ['stat_products','stat_cat','stat_orders','stat_min'];
-  statLabels.forEach((el, i) => { if (sk[i] && dict[sk[i]]) el.textContent = dict[sk[i]]; });
-  // Business label pada kad harga
-  document.querySelectorAll('.price small').forEach(el => { el.textContent = LANG === 'en' ? 'one-time' : 'sekali bayar'; });
-  // Butang beli pada kad
-  document.querySelectorAll('.card-foot .btn').forEach(el => { el.textContent = LANG === 'en' ? 'Buy' : 'Beli'; });
-  document.querySelectorAll('.cat-count').forEach(el => {
-    const n = el.textContent.match(/\d+/);
-    if (n) el.textContent = n[0] + (LANG === 'en' ? ' options' : ' pilihan');
-  });
-  // Lang label
-  const lb = document.getElementById('langLabel');
-  if (lb) lb.textContent = (LANG === 'ms') ? 'EN' : 'BM';
-  // html lang attr
-  document.documentElement.lang = LANG;
 }
 
 async function loadProducts() {
@@ -592,10 +462,9 @@ function render(data) {
     html += '</div></div>';
   }
   document.getElementById('catalog').innerHTML = html;
-  applyLang();   // terjemah label produk
 }
 
-loadSiteConfig().then(() => loadProducts()).then(() => applyLang());
+loadSiteConfig().then(() => loadProducts());
 </script>
 </body>
 </html>
