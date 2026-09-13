@@ -335,15 +335,22 @@ const TG = 'https://t.me/byinsautoorderbot';
 
 async function loadProducts() {
   try {
-    const r = await fetch(API_BASE + '/api/products', { cache: 'no-store' });
+    // Cache-bust: paksa ambil data terbaru (elak cache lama browser)
+    const url = API_BASE + '/api/products?_=' + Date.now();
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 15000);   // timeout 15s
+    const r = await fetch(url, { cache: 'no-store', signal: ctrl.signal });
+    clearTimeout(t);
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
+    if (!data || !data.categories) throw new Error('Data tidak sah');
     render(data);
   } catch (e) {
-    console.error(e);
+    console.error('Load error:', e);
     document.getElementById('catalog').innerHTML =
-      '<div class="loader">⚠️ Gagal memuatkan produk. Sila muat semula halaman.<br><br>' +
-      '<a href="' + TG + '" class="btn btn-primary" target="_blank" rel="noopener">Buka Bot Telegram</a></div>';
+      '<div class="loader">⚠️ Gagal memuatkan produk.<br><small style="opacity:.7">' + esc(e.message) + '</small><br><br>' +
+      '<button onclick="loadProducts()" class="btn btn-primary" style="margin-right:8px">🔄 Cuba Lagi</button>' +
+      '<a href="' + TG + '" class="btn btn-ghost" target="_blank" rel="noopener">Buka Bot</a></div>';
   }
 }
 
