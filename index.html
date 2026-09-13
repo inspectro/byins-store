@@ -88,6 +88,25 @@
 
   /* === PRODUCT CARDS === */
   .cat { margin-bottom:44px; }
+
+  /* === GROUP BESAR === */
+  .group-block { margin-bottom:64px; }
+  .group-block:last-child { margin-bottom:0; }
+  .group-head {
+    display:flex; align-items:center; gap:14px; margin-bottom:26px;
+    padding:18px 22px; background:linear-gradient(135deg, rgba(16,163,127,.09), rgba(16,163,127,.02));
+    border:1px solid rgba(16,163,127,.25); border-radius:14px;
+  }
+  .group-icon { font-size:28px; line-height:1; }
+  .group-title {
+    font-size:clamp(20px,3vw,26px); font-weight:700; letter-spacing:-.02em;
+    margin:0;
+  }
+  .group-count {
+    margin-left:auto; font-size:13px; color:var(--accent); font-weight:600;
+    background:rgba(16,163,127,.13); border:1px solid rgba(16,163,127,.3);
+    padding:4px 12px; border-radius:999px; white-space:nowrap;
+  }
   .cat-head {
     display:flex; align-items:center; gap:11px; margin-bottom:18px;
     padding-bottom:14px; border-bottom:1px solid var(--border);
@@ -567,30 +586,57 @@ function render(data) {
   }).catch(() => { document.getElementById('s-order').textContent = '—'; });
 
   const cats = data.categories || [];
+  const groups = data.groups || [];
   if (!cats.length) {
     document.getElementById('catalog').innerHTML = '<div class="loader">Tiada produk buat masa ini.</div>';
     return;
   }
 
+  // Header kumpulan besar (jika ada groups)
+  const grpLabel = {
+    "Streaming & Hiburan": { ms: "Streaming & Hiburan", en: "Streaming & Entertainment" },
+    "AI Tools":            { ms: "Alat AI", en: "AI Tools" },
+    "VPN & Privasi":       { ms: "VPN & Privasi", en: "VPN & Privacy" },
+    "Cloud & Developer":   { ms: "Cloud & Pembangun", en: "Cloud & Developer" },
+    "Lain-lain":           { ms: "Lain-lain", en: "Others" },
+  };
+  const gl = (g) => (grpLabel[g] && grpLabel[g][LANG]) || g;
+
   let html = '';
-  for (const c of cats) {
-    html += '<div class="cat">';
-    html += '<div class="cat-head"><span class="cat-icon">' + esc(c.icon) + '</span>';
-    html += '<h3>' + esc(c.category) + '</h3>';
-    html += '<span class="cat-count">' + c.items.length + ' pilihan</span></div>';
-    html += '<div class="grid">';
+  const renderCat = (c) => {
+    let h = '<div class="cat">';
+    h += '<div class="cat-head"><span class="cat-icon">' + esc(c.icon) + '</span>';
+    h += '<h3>' + esc(c.category) + '</h3>';
+    h += '<span class="cat-count">' + c.items.length + (LANG === 'en' ? ' options' : ' pilihan') + '</span></div>';
+    h += '<div class="grid">';
     for (const p of c.items) {
-      html += '<div class="card">';
-      html += '<div class="card-top"><div class="card-name">' + esc(p.name) + '</div>';
-      if (p.duration && p.duration !== p.name) html += '<span class="badge">' + esc(p.duration) + '</span>';
-      html += '</div>';
-      if (p.description) html += '<div class="card-desc">' + esc(p.description) + '</div>';
-      html += '<div class="card-foot"><div class="price">' + esc(p.priceDisplay) + '<small>sekali bayar</small></div>';
-      html += '<a href="' + TG + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Beli</a>';
-      html += '</div></div>';
+      h += '<div class="card">';
+      h += '<div class="card-top"><div class="card-name">' + esc(p.name) + '</div>';
+      if (p.duration && p.duration !== p.name) h += '<span class="badge">' + esc(p.duration) + '</span>';
+      h += '</div>';
+      if (p.description) h += '<div class="card-desc">' + esc(p.description) + '</div>';
+      h += '<div class="card-foot"><div class="price">' + esc(p.priceDisplay) + '<small>' + (LANG === 'en' ? 'one-time' : 'sekali bayar') + '</small></div>';
+      h += '<a href="' + TG + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">' + (LANG === 'en' ? 'Buy' : 'Beli') + '</a>';
+      h += '</div></div>';
     }
-    html += '</div></div>';
+    h += '</div></div>';
+    return h;
+  };
+
+  if (groups.length) {
+    // Grouping 2 peringkat
+    for (const g of groups) {
+      html += '<div class="group-block">';
+      html += '<div class="group-head"><span class="group-icon">' + esc(g.icon) + '</span>';
+      html += '<h3 class="group-title">' + esc(gl(g.group)) + '</h3>';
+      html += '<span class="group-count">' + g.count + (LANG === 'en' ? ' items' : ' item') + '</span></div>';
+      for (const c of g.categories) html += renderCat(c);
+      html += '</div>';
+    }
+  } else {
+    for (const c of cats) html += renderCat(c);
   }
+
   document.getElementById('catalog').innerHTML = html;
   applyLang();   // terjemah label produk
 }
