@@ -126,6 +126,17 @@
   .badge { font-size:11px; padding:3px 9px; border-radius:999px; white-space:nowrap;
     background:rgba(16,163,127,.13); color:var(--accent); border:1px solid rgba(16,163,127,.28); font-weight:600; }
   .card-desc { color:var(--muted); font-size:13.5px; white-space:pre-line; flex:1; margin-bottom:18px; line-height:1.55; }
+
+  /* === BADGE STOK === */
+  .stock-badge { font-size:12px; font-weight:600; padding:5px 11px; border-radius:8px;
+    margin-bottom:12px; display:inline-block; }
+  .stock-in  { background:rgba(16,163,127,.13); color:#34d399; border:1px solid rgba(16,163,127,.3); }
+  .stock-low { background:rgba(245,158,11,.13); color:#fbbf24; border:1px solid rgba(245,158,11,.32); }
+  .stock-out { background:rgba(239,68,68,.11); color:#f87171; border:1px solid rgba(239,68,68,.3); }
+  .card-oos { opacity:.62; }
+  .card-oos:hover { transform:none; border-color:var(--border); }
+  .btn-disabled { background:var(--border); color:var(--muted); cursor:not-allowed; }
+  .btn-disabled:hover { transform:none; }
   .card-foot { display:flex; align-items:center; justify-content:space-between; gap:12px;
     padding-top:16px; border-top:1px solid var(--border); }
   .price { font-size:23px; font-weight:700; letter-spacing:-.02em; }
@@ -241,7 +252,7 @@
     </div>
 
     <div class="stats" id="stats">
-      <div class="stat"><b id="s-prod">—</b><small>Produk tersedia</small></div>
+      <div class="stat"><b id="s-prod">—</b><small data-i18n="stat_products">Produk tersedia</small></div>
       <div class="stat"><b id="s-cat">—</b><small>Kategori servis</small></div>
       <div class="stat"><b id="s-order">—</b><small>Pesanan diproses</small></div>
       <div class="stat"><b id="s-min">—</b><small>Harga bermula</small></div>
@@ -354,7 +365,8 @@
 <script>
 const API_BASE = window.__API_BASE__ || 'https://api.byinsstore.my';
 const ADMIN_API = 'https://admin-api.byinsstore.my';
-const TG = 'https://t.me/byinsautoorderbot';
+let TG = 'https://t.me/byinsautoorderbot';
+let SITE_CONFIG = null;
 
 // ===== Load config UI dari admin API (jika ada) =====
 async function loadSiteConfig() {
@@ -363,10 +375,15 @@ async function loadSiteConfig() {
     if (!r.ok) return;
     const d = await r.json();
     if (!d.ok || !d.config) return;
+    SITE_CONFIG = d.config;
     applyConfig(d.config);
   } catch (e) {
     console.warn('Config tidak dimuat (guna default):', e.message);
   }
+}
+
+function isSafeUrl(value, hosts) {
+  try { const u = new URL(value); return u.protocol === 'https:' && hosts.includes(u.hostname); } catch { return false; }
 }
 
 function applyConfig(c) {
@@ -416,7 +433,7 @@ function applyConfig(c) {
 
   // Contact
   if (c.contact) {
-    if (c.contact.telegram) document.querySelectorAll('a[data-tg]').forEach(a => a.href = c.contact.telegram);
+    if (isSafeUrl(c.contact.telegram, ['t.me','telegram.me'])) { TG = c.contact.telegram; document.querySelectorAll('a[data-tg]').forEach(a => a.href = TG); }
     if (c.contact.admin)    setHref('footer-admin', c.contact.admin);
   }
   applyLang();
@@ -546,6 +563,25 @@ function applyLang() {
   if (lb) lb.textContent = (LANG === 'ms') ? 'EN' : 'BM';
   // html lang attr
   document.documentElement.lang = LANG;
+
+  // Config dashboard dianggap kandungan BM. Selepas i18n, apply semula config untuk BM sahaja.
+  if (LANG === 'ms' && SITE_CONFIG) {
+    const c = SITE_CONFIG;
+    const set = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.textContent = val; };
+    if (c.hero) {
+      set('hero-badge', c.hero.badge); set('hero-title1', c.hero.title1); set('hero-title2', c.hero.title2);
+      set('hero-sub', c.hero.subtitle); set('hero-cta1', c.hero.ctaPrimary); set('hero-cta2', c.hero.ctaSecondary);
+      if (Array.isArray(c.hero.notes) && c.hero.notes.length) {
+        const box = document.getElementById('hero-notes');
+        if (box) box.innerHTML = c.hero.notes.map(n => '<span>✓ ' + esc(n) + '</span>').join('');
+      }
+    }
+    if (c.sections) {
+      set('cat-tag', c.sections.catalogTag); set('cat-title', c.sections.catalogTitle); set('cat-sub', c.sections.catalogSub);
+      set('feat-tag', c.sections.featuresTag); set('feat-title', c.sections.featuresTitle);
+      set('steps-tag', c.sections.stepsTag); set('steps-title', c.sections.stepsTitle);
+    }
+  }
 }
 
 async function loadProducts() {
@@ -578,11 +614,11 @@ function esc(s) {
 function render(data) {
   // Stats
   const s = data.stats || {};
-  document.getElementById('s-prod').textContent = s.totalProducts || '—';
-  document.getElementById('s-cat').textContent = s.totalCategories || '—';
-  document.getElementById('s-min').textContent = s.minPrice != null ? 'RM' + s.minPrice.toFixed(0) : '—';
-  fetch(API_BASE + '/api/stats').then(r => r.json()).then(st => {
-    document.getElementById('s-order').textContent = (st.totalOrders || 0) + '+';
+  document.getElementById('s-prod').textContent = (s.inStock != null ? s.inStock : s.totalProducts) ?? '—';
+  document.getElementById('s-cat').textContent = s.totalCategories ?? '—';
+  document.getElementById('s-min').textContent = s.minPrice != null ? 'RM' + Number(s.minPrice).toFixed(2) : '—';
+  fetch(API_BASE + '/api/stats').then(r => { if (!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(st => {
+    document.getElementById('s-order').textContent = (Number(st.totalOrders) || 0) + '+';
   }).catch(() => { document.getElementById('s-order').textContent = '—'; });
 
   const cats = data.categories || [];
@@ -604,19 +640,36 @@ function render(data) {
 
   let html = '';
   const renderCat = (c) => {
+    // Kira berapa produk dalam kategori ni yang ada stok
+    const availInCat = c.items.filter(p => p.inStock).length;
     let h = '<div class="cat">';
     h += '<div class="cat-head"><span class="cat-icon">' + esc(c.icon) + '</span>';
     h += '<h3>' + esc(c.category) + '</h3>';
     h += '<span class="cat-count">' + c.items.length + (LANG === 'en' ? ' options' : ' pilihan') + '</span></div>';
     h += '<div class="grid">';
     for (const p of c.items) {
-      h += '<div class="card">';
+      const oos = !p.inStock;                       // out of stock
+      h += '<div class="card' + (oos ? ' card-oos' : '') + '">';
       h += '<div class="card-top"><div class="card-name">' + esc(p.name) + '</div>';
       if (p.duration && p.duration !== p.name) h += '<span class="badge">' + esc(p.duration) + '</span>';
       h += '</div>';
+
+      // Badge stok
+      if (oos) {
+        h += '<div class="stock-badge stock-out">' + (LANG === 'en' ? '✕ Out of stock' : '✕ Stok habis') + '</div>';
+      } else if (p.stock <= 3) {
+        h += '<div class="stock-badge stock-low">' + (LANG === 'en' ? '⚠ Only ' + p.stock + ' left' : '⚠ Baki ' + p.stock + ' sahaja') + '</div>';
+      } else {
+        h += '<div class="stock-badge stock-in">' + (LANG === 'en' ? '✓ In stock (' + p.stock + ')' : '✓ Ada stok (' + p.stock + ')') + '</div>';
+      }
+
       if (p.description) h += '<div class="card-desc">' + esc(p.description) + '</div>';
       h += '<div class="card-foot"><div class="price">' + esc(p.priceDisplay) + '<small>' + (LANG === 'en' ? 'one-time' : 'sekali bayar') + '</small></div>';
-      h += '<a href="' + TG + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">' + (LANG === 'en' ? 'Buy' : 'Beli') + '</a>';
+      if (oos) {
+        h += '<span class="btn btn-disabled btn-sm">' + (LANG === 'en' ? 'Sold out' : 'Habis') + '</span>';
+      } else {
+        h += '<a href="' + TG + '" class="btn btn-primary btn-sm" target="_blank" rel="noopener">' + (LANG === 'en' ? 'Buy' : 'Beli') + '</a>';
+      }
       h += '</div></div>';
     }
     h += '</div></div>';
