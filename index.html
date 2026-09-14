@@ -46,6 +46,43 @@
   .btn-ghost:hover { background:var(--card); }
   .btn-sm { padding:9px 16px; font-size:13.5px; }
 
+  /* === STATUS BAR === */
+  .status-bar {
+    background:rgba(16,163,127,.07); border-bottom:1px solid var(--border);
+    font-size:13px; transition:background .3s;
+  }
+  .status-in { display:flex; align-items:center; gap:9px; padding:9px 24px; justify-content:center; }
+  .status-dot {
+    width:9px; height:9px; border-radius:50%; background:#9ca3af; flex-shrink:0;
+    box-shadow:0 0 0 0 rgba(16,163,127,.5);
+  }
+  .status-dot.on  { background:#10a37f; animation:pulseDot 2s infinite; }
+  .status-dot.off { background:#ef4444; }
+  .status-dot.warn{ background:#f59e0b; }
+  @keyframes pulseDot {
+    0%   { box-shadow:0 0 0 0 rgba(16,163,127,.55); }
+    70%  { box-shadow:0 0 0 9px rgba(16,163,127,0); }
+    100% { box-shadow:0 0 0 0 rgba(16,163,127,0); }
+  }
+  .status-text { font-weight:600; }
+  .status-text.on  { color:#34d399; }
+  .status-text.off { color:#f87171; }
+  .status-text.warn{ color:#fbbf24; }
+  .status-time { color:var(--muted); font-size:12.5px; }
+  .status-bar.bar-off  { background:rgba(239,68,68,.07); }
+  .status-bar.bar-warn { background:rgba(245,158,11,.08); }
+
+  /* === NOTIS STATUS (maintenance/tutup) === */
+  .status-notice { padding:0 0 0; margin-bottom:-20px; }
+  .notice-inner {
+    max-width:860px; margin:0 auto 40px; display:flex; gap:16px; align-items:flex-start;
+    background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.3);
+    border-radius:14px; padding:20px 24px;
+  }
+  .notice-icon { font-size:26px; line-height:1; flex-shrink:0; }
+  .notice-inner b { display:block; font-size:16px; margin-bottom:6px; color:#fbbf24; }
+  .notice-inner p { color:var(--muted); font-size:14px; margin:0; }
+
   /* === HERO === */
   header { padding:88px 0 72px; text-align:center; position:relative; overflow:hidden; }
   header::before {
@@ -254,6 +291,14 @@
       <a href="https://t.me/byinsautoorderbot" data-tg class="btn btn-primary btn-sm" target="_blank" rel="noopener" data-i18n="nav_buy">Beli Sekarang</a>
     </div>
   </div>
+  <!-- Status sistem (di bawah nav) -->
+  <div id="statusBar" class="status-bar">
+    <div class="wrap status-in">
+      <span class="status-dot" id="statusDot"></span>
+      <span class="status-text" id="statusText">Menyemak status...</span>
+      <span class="status-time" id="statusTime"></span>
+    </div>
+  </div>
 </nav>
 
 <header>
@@ -402,6 +447,88 @@ const API_BASE = window.__API_BASE__ || 'https://api.byinsstore.my';
 const ADMIN_API = 'https://admin-api.byinsstore.my';
 let TG = 'https://t.me/byinsautoorderbot';
 let SITE_CONFIG = null;
+
+// ===== Status sistem (online / maintenance / offline) =====
+async function checkStatus() {
+  const dot  = document.getElementById('statusDot');
+  const txt  = document.getElementById('statusText');
+  const time = document.getElementById('statusTime');
+  const bar  = document.getElementById('statusBar');
+  if (!dot || !txt) return;
+
+  const setUI = (cls, text, barCls, timeText) => {
+    dot.className = 'status-dot ' + cls;
+    txt.className = 'status-text ' + cls;
+    txt.textContent = text;
+    bar.className = 'status-bar' + (barCls ? ' ' + barCls : '');
+    if (time) time.textContent = timeText || '';
+  };
+
+  const now = () => new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 8000);
+    const r = await fetch(API_BASE + '/api/status?_=' + Date.now(), { cache: 'no-store', signal: ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+
+    if (d.maintenance) {
+      setUI('warn',
+        LANG === 'en' ? 'Under maintenance — orders will resume shortly' : 'Sistem dalam penyelenggaraan — pesanan akan disambung semula',
+        'bar-warn', now());
+      // Tunjuk notis besar juga
+      showStatusNotice('maintenance');
+    } else if (d.storeClosed) {
+      setUI('warn',
+        LANG === 'en' ? 'Store is closed — check back soon' : 'Kedai ditutup — sila datang semula',
+        'bar-warn', now());
+      showStatusNotice('closed');
+    } else {
+      setUI('on',
+        LANG === 'en' ? 'All systems online — instant processing' : 'Sistem beroperasi — pesanan diproses serta-merta',
+        '', now());
+      hideStatusNotice();
+    }
+  } catch (e) {
+    setUI('off',
+      LANG === 'en' ? 'Cannot reach system — retrying...' : 'Tidak dapat hubungi sistem — cuba semula...',
+      'bar-off', now());
+  }
+}
+
+// Notis besar bila maintenance / tutup
+function showStatusNotice(kind) {
+  let box = document.getElementById('statusNotice');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'statusNotice';
+    box.className = 'status-notice';
+    const catalog = document.getElementById('produk');
+    if (catalog) catalog.parentNode.insertBefore(box, catalog.nextSibling);
+  }
+  const isMaint = kind === 'maintenance';
+  box.innerHTML =
+    '<div class="notice-inner">' +
+    '<span class="notice-icon">' + (isMaint ? '🚧' : '🔒') + '</span>' +
+    '<div><b>' + (isMaint
+      ? (LANG === 'en' ? 'System under maintenance' : 'Sistem sedang diselenggara')
+      : (LANG === 'en' ? 'Store temporarily closed' : 'Kedai ditutup sementara')) + '</b>' +
+    '<p>' + (isMaint
+      ? (LANG === 'en' ? 'We are improving our system. Orders will resume shortly. Thank you for your patience.' : 'Kami sedang menambah baik sistem. Pesanan akan disambung semula sebentar lagi. Terima kasih atas kesabaran anda.')
+      : (LANG === 'en' ? 'We are not accepting orders right now. Please check back soon.' : 'Kami tidak menerima pesanan buat masa ini. Sila datang semula nanti.')) + '</p></div>' +
+    '</div>';
+}
+function hideStatusNotice() {
+  const b = document.getElementById('statusNotice');
+  if (b) b.remove();
+}
+
+// Semak status: mula, setiap 60s, dan bila tab aktif semula
+checkStatus();
+setInterval(checkStatus, 60000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkStatus(); });
 
 // ===== Load config UI dari admin API (jika ada) =====
 async function loadSiteConfig() {
@@ -568,6 +695,7 @@ function toggleLang() {
   localStorage.setItem('byins_lang', LANG);
   render();          // re-render supaya deskripsi tukar bahasa
   applyLang();
+  if (typeof checkStatus === 'function') checkStatus();   // teks status tukar bahasa
   if (typeof track === 'function') track('lang');
 }
 
